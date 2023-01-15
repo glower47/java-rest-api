@@ -1,16 +1,11 @@
 package com.example.andreitrache.controller;
 
-import com.example.andreitrache.dto.ConnectionDto;
 import com.example.andreitrache.dto.UserDto;
 import com.example.andreitrache.model.Connection;
 import com.example.andreitrache.repository.ConnectionRepository;
 import com.example.andreitrache.service.ConnectionService;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +24,8 @@ public class ConnectionController {
     }
 
     @PostMapping
-    public Connection createConnection(@RequestBody Connection connection) {
-        return connectionService.createConnection(connection);
+    public ResponseEntity<Connection> createConnection(@RequestBody Connection connection) {
+        return ResponseEntity.ok(connectionService.createConnection(connection));
     }
 
     @GetMapping
@@ -46,8 +41,9 @@ public class ConnectionController {
     }
 
     @DeleteMapping
-    public void deleteConnection(@RequestBody Connection connection) {
+    public ResponseEntity<Void> deleteConnection(@RequestBody Connection connection) {
         connectionService.deleteConnection(connection);
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -2,6 +2,9 @@ package com.example.andreitrache.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "groups")
 public class Group {
@@ -12,6 +15,9 @@ public class Group {
 
     private String name;
     private String description;
+
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GroupMember> groupMembers = new ArrayList<>();
 
     public Group() {
     }
@@ -39,5 +45,19 @@ public class Group {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<GroupMember> getGroupMembers() {
+        return groupMembers;
+    }
+
+    public void addGroupMember(GroupMember groupMember) {
+        groupMembers.add(groupMember);
+        groupMember.setGroup(this);
+    }
+
+    public void removeGroupMember(GroupMember groupMember) {
+        groupMembers.remove(groupMember);
+        groupMember.setGroup(null);
     }
 }
