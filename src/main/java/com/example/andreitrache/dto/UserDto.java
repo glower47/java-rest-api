@@ -1,6 +1,7 @@
 package com.example.andreitrache.dto;
 
 import com.example.andreitrache.model.User;
+import lombok.Builder;
 
 public class UserDto {
     private Long id;

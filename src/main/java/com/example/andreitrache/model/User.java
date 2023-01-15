@@ -1,7 +1,6 @@
 package com.example.andreitrache.model;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity

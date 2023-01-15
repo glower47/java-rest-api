@@ -42,19 +42,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(Long id, User user) {
+    public User updateUser(Long id, UserDto user) {
         User existingUser = getUser(id);
         // update the existing user with the new values
         existingUser.setName(user.getName());
-        existingUser.setProfilePicture(user.getProfilePicture());
         existingUser.setEmail(user.getEmail());
+        existingUser.setProfilePicture(user.getProfilePicture());
+        existingUser.setHeadline(user.getHeadline());
+        existingUser.setSummary(user.getSummary());
         // save the updated user
         return userRepository.save(existingUser);
     }
 
     @Override
     public void deleteUser(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new UserException("user with id: " + id + "not found"));
+        User user = userRepository.findById(id).orElseThrow(() -> new UserException(Constants.NO_USER_FOUND));
 
         userRepository.deleteFirstConnections(id);
         userRepository.deleteSecondConnections(id);
