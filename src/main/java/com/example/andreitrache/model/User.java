@@ -2,6 +2,8 @@ package com.example.andreitrache.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -15,6 +17,12 @@ public class User {
     private String profilePicture;
     private String headline;
     private String summary;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Connection> connections;
+
+    @OneToMany(mappedBy = "connection",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Connection> connectionWith;
 
     public User() {
     }
@@ -30,6 +38,10 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -78,5 +90,13 @@ public class User {
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    public List<Connection> getConnections() {
+        return connections;
+    }
+
+    public List<Connection> getConnectionWith() {
+        return connectionWith;
     }
 }

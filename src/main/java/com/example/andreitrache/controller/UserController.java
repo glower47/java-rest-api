@@ -2,8 +2,14 @@ package com.example.andreitrache.controller;
 
 import com.example.andreitrache.dto.UserDto;
 import com.example.andreitrache.model.User;
+import com.example.andreitrache.repository.UserRepository;
 import com.example.andreitrache.service.UserService;
-import org.springframework.http.MediaType;
+import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ProblemDetail;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,9 +19,12 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService,
+                          UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -30,8 +39,8 @@ public class UserController {
 
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable Long id) {
-        return userService.getUser(id);
+    public ResponseEntity<User> getUser(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.getUser(id));
     }
 
     @PutMapping("/{id}")
@@ -45,3 +54,4 @@ public class UserController {
     }
 
 }
+

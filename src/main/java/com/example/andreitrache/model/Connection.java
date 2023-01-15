@@ -1,5 +1,6 @@
 package com.example.andreitrache.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,14 +9,18 @@ public class Connection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
-
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "connection_id")
+    @JoinColumn(name = "connection_id", insertable = false, updatable = false)
     private User connection;
+
+    public User getConnection() {
+        return connection;
+    }
 
     public Connection() {
     }
@@ -29,16 +34,20 @@ public class Connection {
         return id;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return user.getId();
     }
 
     public void setUser(User user) {
         this.user = user;
     }
 
-    public User getConnection() {
-        return connection;
+    public Long getConnectionId() {
+        return connection.getId();
+    }
+
+    public String getConnectionName() {
+        return connection.getName();
     }
 
     public void setConnection(User connection) {
